@@ -1,0 +1,54 @@
+app-id: {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}
+default-branch: {{ cookiecutter.version }}
+runtime: {{ cookiecutter.flatpak_runtime }}
+runtime-version: '{{ cookiecutter.flatpak_runtime_version }}'
+sdk: {{ cookiecutter.flatpak_sdk }}
+command: {{ cookiecutter.app_name }}
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=x11
+  # Wayland access
+  - --socket=wayland
+  # Needs to talk to the network:
+  - --share=network
+  # Needs to save files locally
+  - --filesystem=xdg-documents
+modules:
+  - name: cpython
+    sources:
+      - type: archive
+        path: Python-{{ cookiecutter.python_version }}.tgz
+  - name: app_packages
+    buildsystem: simple
+    build-options:
+      build-args:
+        - --share=network
+    build-commands:
+      - pip3 install -r requirements.txt
+    sources:
+      - type: file
+        path: requirements.txt
+  - name: app
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/briefcase
+      - cp -r src/app/ /app/briefcase/app
+    sources:
+      - type: dir
+        path: src/app/
+        dest: src/app/
+  - name: bootstrap
+    buildsystem: simple
+    build-commands:
+      - install -D bootstrap /app/bin/{{ cookiecutter.app_name }}
+      - install -D {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop /app/share/applications/{{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
+      - cp -r icons /app/share/icons
+    sources:
+      - type: file
+        path: bootstrap
+      - type: file
+        path: {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
+      - type: dir
+        path: icons/
+        dest: icons/

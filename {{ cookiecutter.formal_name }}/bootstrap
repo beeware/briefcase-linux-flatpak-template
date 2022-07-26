@@ -1,0 +1,5 @@
+#!/bin/bash
+export PYTHONPATH=/app/briefcase/app:/app/briefcase/app_packages
+# echo "PATH IS $PATH"
+# echo "PYTHONPATH IS $PYTHONPATH"
+/app/bin/python3 -s -m {{ cookiecutter.module_name }} "$@"
