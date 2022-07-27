@@ -40,8 +40,8 @@ However, if you *do* want use this template directly...
    ``app/<app name>/__main__.py`` file that defines an entry point that will
    start your application.
 
-   If your code has any dependencies, they should be installed into the
-   ``My Project/src/app_packages`` directory.
+5. Add a `requirements.txt` file in the root of your project, adding any
+   dependencies of your application.
 
 If you've done this correctly, a project with a formal name of ``My Project``,
 with an app name of ``my-project`` should have a directory structure that
@@ -56,12 +56,11 @@ looks something like::
                     __init__.py
                     __main__.py
                     app.py
-            app_packages/
-                ...
         bootstrap
         briefcase.toml
         com.example.my-project.desktop
         manifest.yml
+        requirements.txt
         Python-3.11.0.tgz
 
 This directory can then be compiled using ``flatpak-builder``::
