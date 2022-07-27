@@ -13,7 +13,12 @@ finish-args:
   # Needs to talk to the network:
   - --share=network
   # Needs to save files locally
+  - --filesystem=xdg-cache
+  - --filesystem=xdg-config
+  - --filesystem=xdg-data
   - --filesystem=xdg-documents
+  # DBus access
+  - --socket=session-bus
 modules:
   - name: cpython
     sources:
