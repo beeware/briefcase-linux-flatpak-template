@@ -1,6 +1,6 @@
 [paths]
 app_path = "src/app"
-app_requirements_path = "."
+app_requirements_path = "requirements.txt"
 
 icon.16 = "icons/hicolor/16x16/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
 icon.32 = "icons/hicolor/32x32/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
