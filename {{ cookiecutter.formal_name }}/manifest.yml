@@ -17,6 +17,8 @@ finish-args:
   - --filesystem=xdg-config
   - --filesystem=xdg-data
   - --filesystem=xdg-documents
+  # DBus access
+  - --socket=session-bus
 modules:
   - name: cpython
     sources:
