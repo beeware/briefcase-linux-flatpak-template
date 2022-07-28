@@ -4,7 +4,7 @@ Briefcase Linux Flatpak Template
 A `Cookiecutter <https://github.com/cookiecutter/cookiecutter/>`__ template for
 building Python apps that will run under Linux, packaged as a `Flatpak`_.
 
-**This is the development version of the repository. It contains a template for Python 3.11**.
+**This repository branch contains a template for Python 3.8**.
 Other Python versions are available by cloning other branches of repository.
 
 Using this template
@@ -24,7 +24,7 @@ However, if you *do* want use this template directly...
 
 2. Run ``cookiecutter`` on the template::
 
-    $ cookiecutter https://github.com/beeware/briefcase-linux-appimage-template --checkout 3.11
+    $ cookiecutter https://github.com/beeware/briefcase-linux-appimage-template --checkout 3.8
 
    This will ask you for a number of details of your application, including the
    `name` of your application (which should be a valid PyPI identifier), and
@@ -61,7 +61,7 @@ looks something like::
         com.example.my-project.desktop
         manifest.yml
         requirements.txt
-        Python-3.11.0.tgz
+        Python-3.8.0.tgz
 
 This directory can then be compiled using ``flatpak-builder``::
 
