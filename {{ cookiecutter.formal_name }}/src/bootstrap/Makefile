@@ -2,16 +2,16 @@
 CFLAGS=$(shell /app/bin/python3-config --cflags)
 LDFLAGS=$(shell /app/bin/python3-config --ldflags)
 
-all: helloworld
+all: {{ cookiecutter.app_name }}
 
-helloworld: main.c
-	gcc -o helloworld $^ $(CFLAGS) $(LDFLAGS) -lpython{{ '.'.join(cookiecutter.python_version.split('.')[:2]) }}
+{{ cookiecutter.app_name }}: main.c
+	gcc -o {{ cookiecutter.app_name }} $^ $(CFLAGS) $(LDFLAGS) -lpython{{ '.'.join(cookiecutter.python_version.split('.')[:2]) }}
 
 clean:
-	rm -f helloworld
+	rm -f {{ cookiecutter.app_name }}
 
 install:
-	cp helloworld /app/bin/helloworld
+	cp {{ cookiecutter.app_name }} /app/bin/{{ cookiecutter.app_name }}
 
 .PHONY: all clean install
 
