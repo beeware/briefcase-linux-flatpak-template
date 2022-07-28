@@ -9,5 +9,5 @@
     "flatpak_runtime": "org.freedesktop.Platform",
     "flatpak_runtime_version": "21.08",
     "flatpak_sdk": "org.freedesktop.Sdk",
-    "python_version": "3.11.0"
+    "python_version": "3.9.0"
 }
