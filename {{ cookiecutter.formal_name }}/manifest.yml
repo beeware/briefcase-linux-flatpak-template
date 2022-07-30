@@ -4,6 +4,9 @@ runtime: {{ cookiecutter.flatpak_runtime }}
 runtime-version: '{{ cookiecutter.flatpak_runtime_version }}'
 sdk: {{ cookiecutter.flatpak_sdk }}
 command: {{ cookiecutter.app_name }}
+cleanup:
+  - /include
+  - /share/man
 finish-args:
   # X11 + XShm access
   - --share=ipc
@@ -21,9 +24,16 @@ finish-args:
   - --socket=session-bus
 modules:
   - name: cpython
+    config-opts:
+      - --enable-shared
     sources:
       - type: archive
         path: Python-{{ cookiecutter.python_version }}.tgz
+    cleanup:
+      - /bin/2to3*
+      - /bin/idle*
+      - /bin/py*
+      - /lib/python*/config-*
   - name: app_packages
     buildsystem: simple
     build-options:
@@ -43,17 +53,19 @@ modules:
       - type: dir
         path: src/app/
         dest: src/app/
-  - name: bootstrap
+  - name: resources
     buildsystem: simple
     build-commands:
-      - install -D bootstrap /app/bin/{{ cookiecutter.app_name }}
       - install -D {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop /app/share/applications/{{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
       - cp -r icons /app/share/icons
     sources:
-      - type: file
-        path: bootstrap
       - type: file
         path: {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
       - type: dir
         path: icons/
         dest: icons/
+  - name: bootstrap
+    no-autogen: true
+    sources:
+      - type: dir
+        path: src/bootstrap/
