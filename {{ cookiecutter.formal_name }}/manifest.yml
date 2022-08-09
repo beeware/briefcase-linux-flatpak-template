@@ -38,7 +38,8 @@ modules:
     buildsystem: simple
     build-options:
       build-args:
-        - --share=network
+        - --filesystem=host  # For local requirements.
+        - --share=network  # For downloaded requirements.
     build-commands:
       - pip3 install -r requirements.txt
     sources:
