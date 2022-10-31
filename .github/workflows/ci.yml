@@ -6,9 +6,6 @@ on:
       - main
   workflow_call:
 
-env:
-  python_version: "3.9"
-
 defaults:
   run:
     shell: bash # https://github.com/beeware/briefcase/pull/912
@@ -17,12 +14,13 @@ jobs:
   verify-apps:
     name: Build apps
     strategy:
+      fail-fast: false
       matrix:
-        os_name: ["linux"]
+        python_version: ["3.8", "3.9", "3.10", "3.11"]
+        # Pyside2 and Pyside6, and PPB configs aren't known to work on Linux Flatpak at this time.
         framework: ["toga"]
         include:
-          - os_name: linux
-            # Need to use at least 22.04 to get the bugfix in flatpak for handling spaces in filenames.
+          - # Need to use at least 22.04 to get the bugfix in flatpak for handling spaces in filenames.
             platform: ubuntu-22.04
             briefcase-data-dir: ~/.cache/briefcase
             pip-cache-dir: ~/.cache/pip
@@ -45,9 +43,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4.3.0
         with:
-          python-version: ${{ env.python_version }}
+          python-version: ${{ matrix.python_version }}
       - name: Install system dependencies
-        if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get install -y flatpak flatpak-builder
       - name: Install packages
@@ -55,6 +52,6 @@ jobs:
       - name: Build Flatpak project
         run: |
           cd tests/apps/verify-${{ matrix.framework }}
-          briefcase create ${{ matrix.os_name }} flatpak
-          briefcase build ${{ matrix.os_name }} flatpak
-          briefcase package ${{ matrix.os_name }} flatpak --adhoc-sign
+          briefcase create linux flatpak
+          briefcase build linux flatpak
+          briefcase package linux flatpak --adhoc-sign
