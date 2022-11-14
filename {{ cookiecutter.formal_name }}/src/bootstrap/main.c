@@ -169,8 +169,11 @@ int main(int argc, char *argv[]) {
         exit(-4);
     }
 
-    // Ensure stdout is flushed before Python starts generating output
+    // Print a separator to differentiate Python startup logs from app logs,
+    // then flush stdout/stderr to ensure all startup logs have been output.
+    printf("---------------------------------------------------------------------------\n");
     fflush(stdout);
+    fflush(stderr);
 
     // Invoke the app module
     result = PyObject_Call(module_attr, method_args, NULL);
