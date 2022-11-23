@@ -13,7 +13,6 @@ int main(int argc, char *argv[]) {
     char *python_home;
     char *app_module_name;
     char *path;
-    wchar_t *wapp_module_name;
     wchar_t *wtmp_str;
     PyObject *app_module;
     PyObject *module;
@@ -29,9 +28,6 @@ int main(int argc, char *argv[]) {
     PyConfig_InitIsolatedConfig(&config);
 
     // Configure the Python interpreter:
-    // Run at optimization level 1
-    // (remove assertions, set __debug__ to False)
-    config.optimization_level = 1;
     // Don't buffer stdio. We want output to appears in the log immediately
     config.buffered_stdio = 0;
     // Don't write bytecode; we can't modify the app bundle
@@ -52,9 +48,15 @@ int main(int argc, char *argv[]) {
     }
     PyMem_RawFree(wtmp_str);
 
-    // Determine the app module name
-    wapp_module_name = Py_DecodeLocale("{{ cookiecutter.module_name }}", NULL);
-    status = PyConfig_SetString(&config, &config.run_module, wapp_module_name);
+    // Determine the app module name. Look for the BRIEFCASE_MAIN_MODULE
+    // environment variable first; if that exists, we're probably in test
+    // mode. If it doesn't exist, fall back to the MainModule key in the
+    // main bundle.
+    app_module_name = getenv("BRIEFCASE_MAIN_MODULE");
+    if (app_module_name == NULL) {
+        app_module_name = "{{ cookiecutter.module_name }}";
+    }
+    status = PyConfig_SetBytesString(&config, &config.run_module, app_module_name);
     if (PyStatus_Exception(status)) {
         // crash_dialog("Unable to set app module name: %s", status.err_msg);
         PyConfig_Clear(&config);
@@ -142,7 +144,7 @@ int main(int argc, char *argv[]) {
     // pymain_run_module() method); we need to re-implement it
     // because we need to be able to inspect the error state of
     // the interpreter, not just the return code of the module.
-    wprintf(L"Running app module: %s", app_module_name);
+    printf("Running app module: %s\n", app_module_name);
     module = PyImport_ImportModule("runpy");
     if (module == NULL) {
         // crash_dialog(@"Could not import runpy module");
@@ -155,7 +157,7 @@ int main(int argc, char *argv[]) {
         exit(-3);
     }
 
-    app_module = PyUnicode_FromWideChar(wapp_module_name, wcslen(wapp_module_name));
+    app_module = PyUnicode_FromString(app_module_name);
     if (app_module == NULL) {
         // crash_dialog(@"Could not convert module name to unicode");
         exit(-3);
@@ -167,6 +169,13 @@ int main(int argc, char *argv[]) {
         exit(-4);
     }
 
+    // Print a separator to differentiate Python startup logs from app logs,
+    // then flush stdout/stderr to ensure all startup logs have been output.
+    printf("---------------------------------------------------------------------------\n");
+    fflush(stdout);
+    fflush(stderr);
+
+    // Invoke the app module
     result = PyObject_Call(module_attr, method_args, NULL);
 
     if (result == NULL) {
@@ -207,7 +216,6 @@ int main(int argc, char *argv[]) {
     }
 
     Py_Finalize();
-    PyMem_RawFree(wapp_module_name);
 
     return ret;
 }
