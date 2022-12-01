@@ -9,6 +9,7 @@
 int main(int argc, char *argv[]) {
     int ret = 0;
     PyStatus status;
+    PyPreConfig preconfig;
     PyConfig config;
     char *python_home;
     char *app_module_name;
@@ -25,9 +26,13 @@ int main(int argc, char *argv[]) {
     PyObject *systemExit_code;
 
     // Generate an isolated Python configuration.
+    PyPreConfig_InitIsolatedConfig(&preconfig);
     PyConfig_InitIsolatedConfig(&config);
 
     // Configure the Python interpreter:
+    // Enforce UTF-8 encoding for stderr, stdout, file-system encoding and locale.
+    // See https://docs.python.org/3/library/os.html#python-utf-8-mode.
+    preconfig.utf8_mode = 1;
     // Don't buffer stdio. We want output to appears in the log immediately
     config.buffered_stdio = 0;
     // Don't write bytecode; we can't modify the app bundle
@@ -35,6 +40,14 @@ int main(int argc, char *argv[]) {
     config.write_bytecode = 0;
     // Isolated apps need to set the full PYTHONPATH manually.
     config.module_search_paths_set = 1;
+
+    printf("Pre-initializing Python runtime...\n");
+    status = Py_PreInitialize(&preconfig);
+    if (PyStatus_Exception(status)) {
+        // crash_dialog("Unable to pre-initialize Python interpreter: %s", status.err_msg, nil]);
+        PyConfig_Clear(&config);
+        Py_ExitStatusException(status);
+    }
 
     // Set the home for the Python interpreter
     python_home = "/app";
