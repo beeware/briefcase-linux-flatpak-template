@@ -14,4 +14,3 @@ install:
 	cp {{ cookiecutter.app_name }} /app/bin/{{ cookiecutter.app_name }}
 
 .PHONY: all clean install
-
