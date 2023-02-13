@@ -32,7 +32,6 @@ modules:
     cleanup:
       - /bin/2to3*
       - /bin/idle*
-      - /bin/py*
       - /lib/python*/config-*
   - name: app_packages
     buildsystem: simple
@@ -41,7 +40,8 @@ modules:
         - --filesystem=host  # For local requirements.
         - --share=network  # For downloaded requirements.
     build-commands:
-      - pip3 install --no-cache-dir -r requirements.txt
+      - mkdir -p /app/briefcase/app_packages
+      - /app/bin/python3 -m pip install --no-cache-dir -r requirements.txt --target /app/briefcase/app_packages
     sources:
       - type: file
         path: requirements.txt
