@@ -122,6 +122,18 @@ int main(int argc, char *argv[]) {
     }
     PyMem_RawFree(wtmp_str);
 
+    // Add the app_packages path
+    path = "/app/briefcase/app_packages";
+    printf("- %s\n", path);
+    wtmp_str = Py_DecodeLocale(path, NULL);
+    status = PyWideStringList_Append(&config.module_search_paths, wtmp_str);
+    if (PyStatus_Exception(status)) {
+        // crash_dialog("Unable to set app path: %s", status.err_msg);
+        PyConfig_Clear(&config);
+        Py_ExitStatusException(status);
+    }
+    PyMem_RawFree(wtmp_str);
+
     // Add the app path
     path = "/app/briefcase/app";
     printf("- %s\n", path);
