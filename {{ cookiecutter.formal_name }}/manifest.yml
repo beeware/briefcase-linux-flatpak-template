@@ -49,6 +49,13 @@ modules:
       - type: dir
         path: icons/
         dest: icons/
+  - name: upgrade_pip
+    buildsystem: simple
+    build-options:
+      build-args:
+        - --share=network  # For downloaded requirements.
+    build-commands:
+      - /app/bin/python3 -m pip install --upgrade pip
   - name: app_packages
     buildsystem: simple
     build-options:
