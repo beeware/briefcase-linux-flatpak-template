@@ -11,8 +11,8 @@ finish-args:
   # X11 + XShm access
   - --share=ipc
   - --socket=x11
-  # Wayland access
-  - --socket=wayland
+  # Disable Wayland access
+  - --nosocket=wayland
   # Needs to talk to the network:
   - --share=network
   # Needs to save files locally
@@ -33,6 +33,29 @@ modules:
       - /bin/2to3*
       - /bin/idle*
       - /lib/python*/config-*
+  - name: bootstrap
+    no-autogen: true
+    sources:
+      - type: dir
+        path: src/bootstrap/
+  - name: resources
+    buildsystem: simple
+    build-commands:
+      - install -D {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop /app/share/applications/{{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
+      - cp -r icons /app/share/icons
+    sources:
+      - type: file
+        path: {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
+      - type: dir
+        path: icons/
+        dest: icons/
+  - name: upgrade_pip
+    buildsystem: simple
+    build-options:
+      build-args:
+        - --share=network  # For downloaded requirements.
+    build-commands:
+      - /app/bin/python3 -m pip install --upgrade pip
   - name: app_packages
     buildsystem: simple
     build-options:
@@ -54,19 +77,3 @@ modules:
       - type: dir
         path: src/app/
         dest: src/app/
-  - name: resources
-    buildsystem: simple
-    build-commands:
-      - install -D {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop /app/share/applications/{{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
-      - cp -r icons /app/share/icons
-    sources:
-      - type: file
-        path: {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
-      - type: dir
-        path: icons/
-        dest: icons/
-  - name: bootstrap
-    no-autogen: true
-    sources:
-      - type: dir
-        path: src/bootstrap/
