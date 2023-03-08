@@ -3,7 +3,7 @@ repos:
     rev: v4.4.0
     hooks:
       - id: check-yaml
-        exclude: "{{ cookiecutter.formal_name }}/manifest.yml"
+        exclude: "{{ cookiecutter.format }}/manifest.yml"
       - id: check-json
       - id: check-xml
       - id: check-case-conflict
