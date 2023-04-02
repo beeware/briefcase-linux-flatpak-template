@@ -23,6 +23,6 @@ requires = [
 
 [tool.briefcase.app.verify-toga.linux.flatpak]
 flatpak_runtime = 'org.gnome.Platform'
-flatpak_runtime_version = '42'
+flatpak_runtime_version = '44'
 flatpak_sdk = 'org.gnome.Sdk'
 template = '../../../'
