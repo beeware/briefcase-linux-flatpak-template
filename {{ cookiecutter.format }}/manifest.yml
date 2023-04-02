@@ -24,11 +24,18 @@ finish-args:
   - --socket=session-bus
 modules:
   - name: cpython
-    config-opts:
-      - --enable-shared
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/bin
+      - cp -r support/python/bin/* /app/bin
+      - mkdir -p /app/include
+      - cp -r support/python/include/* /app/include
+      - mkdir -p /app/lib
+      - cp -r support/python/lib/* /app/lib
     sources:
-      - type: archive
-        path: Python-{{ cookiecutter.python_version }}.tgz
+      - type: dir
+        path: support/python
+        dest: support/python
     cleanup:
       - /bin/2to3*
       - /bin/idle*
@@ -64,7 +71,12 @@ modules:
         - --share=network  # For downloaded requirements.
     build-commands:
       - mkdir -p /app/briefcase/app_packages
-      - /app/bin/python3 -m pip install --no-cache-dir -r requirements.txt --target /app/briefcase/app_packages
+      # Python-standalone is configured using clang; but clang isn't in
+      # the Flatpak build environment. However, clang and gcc are (mostly)
+      # command line compatible, and the output objects are compatible,
+      # so we can override the CC build environment variable to force the
+      # use of gcc.
+      - CC="gcc -pthread" /app/bin/python3 -m pip install --no-cache-dir -r requirements.txt --target /app/briefcase/app_packages
     sources:
       - type: file
         path: requirements.txt
