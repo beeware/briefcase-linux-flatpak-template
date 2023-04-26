@@ -5,6 +5,7 @@
     "module_name": "{{ cookiecutter.app_name|replace('-', '_') }}",
     "version": "1.0",
     "bundle": "com.example",
+    "bundle_identifier": "{{ cookiecutter.bundle }}.{{ cookiecutter.app_name|replace('_', '-') }}",
     "url": "https://example.com",
     "description": "Short description of app",
     "flatpak_runtime": "org.freedesktop.Platform",

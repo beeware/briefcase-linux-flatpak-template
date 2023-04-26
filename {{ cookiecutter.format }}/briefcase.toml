@@ -11,10 +11,10 @@ support_path = "support"
 }.get(cookiecutter.python_version|py_tag, "") }}
 
 
-icon.16 = "icons/hicolor/16x16/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
-icon.32 = "icons/hicolor/32x32/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
-icon.64 = "icons/hicolor/64x64/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
-icon.128 = "icons/hicolor/128x128/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
-icon.256 = "icons/hicolor/256x256/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
-icon.512 = "icons/hicolor/512x512/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
-# icon.scalable = "icons/hicolor/scalable/apps/{{ cookiecutter.bundle}}.{{ cookiecutter.app_name }}.png"
+icon.16 = "icons/hicolor/16x16/apps/{{ cookiecutter.bundle_identifier }}.png"
+icon.32 = "icons/hicolor/32x32/apps/{{ cookiecutter.bundle_identifier }}.png"
+icon.64 = "icons/hicolor/64x64/apps/{{ cookiecutter.bundle_identifier }}.png"
+icon.128 = "icons/hicolor/128x128/apps/{{ cookiecutter.bundle_identifier }}.png"
+icon.256 = "icons/hicolor/256x256/apps/{{ cookiecutter.bundle_identifier }}.png"
+icon.512 = "icons/hicolor/512x512/apps/{{ cookiecutter.bundle_identifier }}.png"
+# icon.scalable = "icons/hicolor/scalable/apps/{{ cookiecutter.bundle_identifier }}.png"
