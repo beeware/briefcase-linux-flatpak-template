@@ -1,4 +1,4 @@
-app-id: {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}
+app-id: {{ cookiecutter.bundle_identifier }}
 default-branch: {{ cookiecutter.version }}
 runtime: {{ cookiecutter.flatpak_runtime }}
 runtime-version: '{{ cookiecutter.flatpak_runtime_version }}'
@@ -48,11 +48,11 @@ modules:
   - name: resources
     buildsystem: simple
     build-commands:
-      - install -D {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop /app/share/applications/{{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
+      - install -D {{ cookiecutter.bundle_identifier }}.desktop /app/share/applications/{{ cookiecutter.bundle_identifier }}.desktop
       - cp -r icons /app/share/icons
     sources:
       - type: file
-        path: {{ cookiecutter.bundle }}.{{ cookiecutter.app_name }}.desktop
+        path: {{ cookiecutter.bundle_identifier }}.desktop
       - type: dir
         path: icons/
         dest: icons/
