@@ -32,6 +32,10 @@ modules:
       - cp -r support/python/include/* /app/include
       - mkdir -p /app/lib
       - cp -r support/python/lib/* /app/lib
+      # Remove clang-specific flags from configurations
+      - sed -e "s/-fdebug-default-version=4//g" support/python/bin/python3-config > /app/bin/python3-config
+      - sed -e "s/-fdebug-default-version=4//g" support/python/bin/python3.{{ cookiecutter.python_version.split('.')[1] }}-config > /app/bin/python3.{{ cookiecutter.python_version.split('.')[1] }}-config
+      - sed -e "s/-fdebug-default-version=4//g" support/python/lib/python3.{{ cookiecutter.python_version.split('.')[1] }}/_sysconfigdata__linux_x86_64-linux-gnu.py > /app/lib/python3.{{ cookiecutter.python_version.split('.')[1] }}/_sysconfigdata__linux_x86_64-linux-gnu.py
     sources:
       - type: dir
         path: support/python
