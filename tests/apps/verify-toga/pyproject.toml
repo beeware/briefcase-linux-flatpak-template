@@ -18,7 +18,7 @@ requires = [
 
 [tool.briefcase.app.verify-toga.linux]
 requires = [
-    "toga-gtk>=0.3.1",
+    "toga-gtk~=0.4.0",
 ]
 
 [tool.briefcase.app.verify-toga.linux.flatpak]
