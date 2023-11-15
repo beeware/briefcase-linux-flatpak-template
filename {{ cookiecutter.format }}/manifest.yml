@@ -70,6 +70,8 @@ modules:
   - name: app_packages
     buildsystem: simple
     build-options:
+      strip: false
+      no-debuginfo: true
       build-args:
         - --filesystem=host  # For local requirements.
         - --share=network  # For downloaded requirements.
@@ -86,6 +88,9 @@ modules:
         path: requirements.txt
   - name: app
     buildsystem: simple
+    build-options:
+      strip: false
+      no-debuginfo: true
     build-commands:
       - mkdir -p /app/briefcase
       - cp -r src/app/ /app/briefcase/app
