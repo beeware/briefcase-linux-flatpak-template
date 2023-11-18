@@ -13,14 +13,17 @@ concurrency:
 
 defaults:
   run:
-    shell: bash  # https://github.com/beeware/briefcase/pull/912
+    shell: bash
+
+env:
+  FORCE_COLOR: "1"
 
 jobs:
   pre-commit:
     name: Pre-commit checks
     uses: beeware/.github/.github/workflows/pre-commit-run.yml@main
     with:
-      pre-commit-source: "pre-commit"
+      pre-commit-source: pre-commit
 
   verify-apps:
     name: Build apps
@@ -36,5 +39,5 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
-        # Pyside2 and Pyside6, and PPB configs aren't known to work on Linux Flatpak at this time.
+        # PySide6 and PPB aren't known to work on Linux Flatpak
         framework: [ "toga", "pygame" ]
