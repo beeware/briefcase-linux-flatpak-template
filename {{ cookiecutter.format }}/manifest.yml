@@ -13,9 +13,13 @@ finish-args:
   - --socket=x11
   # Disable Wayland access
   - --nosocket=wayland
-  # Needs to talk to the network:
+  # Network access
   - --share=network
-  # Needs to save files locally
+  # GPU access
+  - --device=dri
+  # Sound access
+  - --socket=pulseaudio
+  # Host filesystem access
   - --filesystem=xdg-cache
   - --filesystem=xdg-config
   - --filesystem=xdg-data
