@@ -8,13 +8,24 @@ cleanup:
   - /include
   - /share/man
 finish-args:
-{%- if cookiecutter.finish_args -%}
-  {%- for arg, enabled in cookiecutter.finish_args.items() -%}
-    {%- if enabled %}
-  - --{{ arg }}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endif %}
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=x11
+  # Disable Wayland access
+  - --nosocket=wayland
+  # Network access
+  - --share=network
+  # GPU access
+  - --device=dri
+  # Sound access
+  - --socket=pulseaudio
+  # Host filesystem access
+  - --filesystem=xdg-cache
+  - --filesystem=xdg-config
+  - --filesystem=xdg-data
+  - --filesystem=xdg-documents
+  # DBus access
+  - --socket=session-bus
 modules:
   - name: cpython
     buildsystem: simple
@@ -56,7 +67,6 @@ modules:
         - --share=network  # For downloaded requirements.
     build-commands:
       - /app/bin/python3 -m pip install --upgrade pip
-{{ cookiecutter.modules_extra_content }}
   - name: app_packages
     buildsystem: simple
     build-options:
