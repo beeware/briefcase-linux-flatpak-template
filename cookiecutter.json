@@ -11,6 +11,8 @@
     "flatpak_runtime": "org.freedesktop.Platform",
     "flatpak_runtime_version": "21.08",
     "flatpak_sdk": "org.freedesktop.Sdk",
+    "finish_args": "",
+    "modules_extra_content": "",
     "python_version": "3.X.0",
     "_extensions": [
         "briefcase.integrations.cookiecutter.PythonVersionExtension"
