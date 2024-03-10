@@ -25,6 +25,9 @@ modules:
       - cp -r support/python/include/* /app/include
       - mkdir -p /app/lib
       - cp -r support/python/lib/* /app/lib
+      # Update installation prefix for pip package builds
+      - sed --follow-symlinks -i 's/prefix="\/install"/prefix="\/app"/g' /app/bin/python3-config
+      - sed --follow-symlinks -i 's/prefix=\/install/prefix=\/app/g' /app/lib/pkgconfig/python3.pc /app/lib/pkgconfig/python3-embed.pc
     sources:
       - type: dir
         path: support/python
