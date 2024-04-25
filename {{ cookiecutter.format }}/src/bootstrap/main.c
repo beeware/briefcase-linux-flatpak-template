@@ -61,6 +61,14 @@ int main(int argc, char *argv[]) {
     }
     PyMem_RawFree(wtmp_str);
 
+    // Set the executable name to match argv[0]
+    status = PyConfig_SetBytesString(&config, &config.executable, argv[0]);
+    if (PyStatus_Exception(status)) {
+        // crash_dialog("Unable to set executable name: %s", status.err_msg);
+        PyConfig_Clear(&config);
+        Py_ExitStatusException(status);
+    }
+
     // Determine the app module name. Look for the BRIEFCASE_MAIN_MODULE
     // environment variable first; if that exists, we're probably in test
     // mode. If it doesn't exist, fall back to the MainModule key in the
