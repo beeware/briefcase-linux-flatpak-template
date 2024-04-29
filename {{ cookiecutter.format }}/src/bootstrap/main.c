@@ -61,8 +61,8 @@ int main(int argc, char *argv[]) {
     }
     PyMem_RawFree(wtmp_str);
 
-    // Set the executable name to match argv[0]
-    status = PyConfig_SetBytesString(&config, &config.executable, argv[0]);
+    // Set the executable to match the known path of the app binary in the flatpak.
+    status = PyConfig_SetBytesString(&config, &config.executable, "/app/bin/{{ cookiecutter.app_name }}");
     if (PyStatus_Exception(status)) {
         // crash_dialog("Unable to set executable name: %s", status.err_msg);
         PyConfig_Clear(&config);
