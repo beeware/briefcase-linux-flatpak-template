@@ -8,6 +8,7 @@
     "bundle_identifier": "{{ cookiecutter.bundle }}.{{ cookiecutter.app_name|replace('_', '-') }}",
     "url": "https://example.com",
     "description": "Short description of app",
+    "console_app": false,
     "flatpak_runtime": "org.freedesktop.Platform",
     "flatpak_runtime_version": "21.08",
     "flatpak_sdk": "org.freedesktop.Sdk",
