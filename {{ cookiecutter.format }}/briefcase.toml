@@ -6,14 +6,7 @@ target_version = "0.3.20"
 app_path = "src/app"
 app_requirements_path = "requirements.txt"
 support_path = "support"
-{{ {
-    "3.8": 'support_revision = "3.8.19+20240726"',
-    "3.9": 'support_revision = "3.9.19+20240726"',
-    "3.10": 'support_revision = "3.10.14+20240726"',
-    "3.11": 'support_revision = "3.11.9+20240726"',
-    "3.12": 'support_revision = "3.12.4+20240726"',
-}.get(cookiecutter.python_version|py_tag, "") }}
-
+support_revision = "{{ cookiecutter.support_revision }}"
 
 icon.16 = "icons/hicolor/16x16/apps/{{ cookiecutter.bundle_identifier }}.png"
 icon.32 = "icons/hicolor/32x32/apps/{{ cookiecutter.bundle_identifier }}.png"
