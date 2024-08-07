@@ -15,6 +15,7 @@
     "finish_args": "",
     "modules_extra_content": "",
     "python_version": "3.X.0",
+    "support_revision": "",
     "_extensions": [
         "briefcase.integrations.cookiecutter.PythonVersionExtension"
     ]
