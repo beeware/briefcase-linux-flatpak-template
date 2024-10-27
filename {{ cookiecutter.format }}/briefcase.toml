@@ -7,11 +7,11 @@ app_path = "src/app"
 app_requirements_path = "requirements.txt"
 support_path = "support"
 {{ {
-    "3.9": 'support_revision = "3.9.20+20241008"',
-    "3.10": 'support_revision = "3.10.15+20241008"',
-    "3.11": 'support_revision = "3.11.10+20241008"',
-    "3.12": 'support_revision = "3.12.7+20241008"',
-    "3.13": 'support_revision = "3.13.0+20241008"',
+    "3.9": 'support_revision = "3.9.20+20241016"',
+    "3.10": 'support_revision = "3.10.15+20241016"',
+    "3.11": 'support_revision = "3.11.10+20241016"',
+    "3.12": 'support_revision = "3.12.7+20241016"',
+    "3.13": 'support_revision = "3.13.0+20241016"',
 }.get(cookiecutter.python_version|py_tag, "") }}
 
 
