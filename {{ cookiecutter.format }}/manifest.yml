@@ -75,12 +75,14 @@ modules:
       # command line compatible, and the output objects are compatible,
       # so we can override the CC build environment variable to force the
       # use of gcc.
-      - env CC="gcc -pthread" INSTALL_TARGET="/app/briefcase/app_packages" sh ./install_requirements.sh
+      - CC="gcc -pthread" /app/bin/python3 pip_install.py
     sources:
       - type: file
         path: requirements.txt
       - type: file
-        path: install_requirements.sh
+        path: pip-options.txt
+      - type: file
+        path: pip_install.py
   - name: app
     buildsystem: simple
     build-options:
