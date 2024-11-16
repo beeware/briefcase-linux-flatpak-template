@@ -17,5 +17,14 @@ os.execv(
         "--target",
         "/app/briefcase/app_packages",
     ]
-    + Path(__file__).parent.joinpath("pip-options.txt").read_text().split("\n"),
+    + [
+        arg
+        for arg in Path(__file__)
+        .parent.joinpath("pip-options.txt")
+        .read_text()
+        .split("\n")
+        # skip empty lines, including trailing newlines or empty default file
+        # (which contains a single newline character)
+        if arg and not arg.isspace()
+    ],
 )
