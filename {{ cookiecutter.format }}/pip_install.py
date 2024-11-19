@@ -1,13 +1,17 @@
 from pathlib import Path
 import os
+import sys
 
 # Run pip install with default arguments + options read from the app requirement
-# installer args path
+# installer args path.
+# execv is simpler than subprocess, as it avoids needing to manage the subprocess
+# or pipe in/out, which would add a lot of unnecessary complexity for no value.
+# This script only helps build the command, it does not need to check the output at all.
 
 os.execv(
-    "/app/bin/python3",
+    sys.executable,
     [
-        "/app/bin/python3",
+        sys.executable,
         "-m",
         "pip",
         "install",
