@@ -5,6 +5,7 @@ target_version = "0.3.20"
 [paths]
 app_path = "src/app"
 app_requirements_path = "requirements.txt"
+app_requirement_installer_args_path = "pip-options.txt"
 support_path = "support"
 {{ {
     "3.9": 'support_revision = "3.9.20+20241016"',
