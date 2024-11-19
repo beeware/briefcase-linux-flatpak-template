@@ -19,8 +19,7 @@ os.execv(
     ]
     + [
         arg
-        for arg in Path(__file__)
-        .parent.joinpath("pip-options.txt")
+        for arg in (Path(__file__).parent / "pip-options.txt")
         .read_text()
         .split("\n")
         # skip empty lines, including trailing newlines or empty default file
