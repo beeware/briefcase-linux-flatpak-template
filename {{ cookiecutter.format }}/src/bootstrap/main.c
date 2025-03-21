@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
     // files in that directory.
     path = "/app/briefcase/app_packages";
     app_packages_path_str = Py_DecodeLocale(path, NULL);
-   
+
     debug_log("Adding app_packages as site directory: %S\n", app_packages_path_str);
 
     module = PyImport_ImportModule("site");
@@ -185,13 +185,13 @@ int main(int argc, char *argv[]) {
         // crash_dialog("Could not import site module");
         exit(-8);
     }
-    
+
     module_attr = PyObject_GetAttrString(module, "addsitedir");
     if (module_attr == NULL || !PyCallable_Check(module_attr)) {
         // crash_dialog("Could not access site.addsitedir");
         exit(-9);
     }
-    
+
     app_packages_path = PyUnicode_FromWideChar(app_packages_path_str, wcslen(app_packages_path_str));
     if (app_packages_path == NULL) {
         //crash_dialog("Could not convert app_packages path to unicode");
