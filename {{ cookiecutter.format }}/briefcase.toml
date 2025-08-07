@@ -8,11 +8,11 @@ app_requirements_path = "requirements.txt"
 app_requirement_installer_args_path = "pip-options.txt"
 support_path = "support"
 {{ {
-    "3.9": 'support_revision = "3.9.22+20250409"',
-    "3.10": 'support_revision = "3.10.17+20250409"',
-    "3.11": 'support_revision = "3.11.12+20250409"',
-    "3.12": 'support_revision = "3.12.10+20250409"',
-    "3.13": 'support_revision = "3.13.3+20250409"',
+    "3.10": 'support_revision = "3.10.18+20250723"',
+    "3.11": 'support_revision = "3.11.13+20250723"',
+    "3.12": 'support_revision = "3.12.11+20250723"',
+    "3.13": 'support_revision = "3.13.5+20250723"',
+    "3.14": 'support_revision = "3.14.0rc1+20250723"',
 }.get(cookiecutter.python_version|py_tag, "") }}
 
 
