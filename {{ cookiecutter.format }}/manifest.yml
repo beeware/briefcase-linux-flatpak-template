@@ -4,6 +4,9 @@ runtime: {{ cookiecutter.flatpak_runtime }}
 runtime-version: '{{ cookiecutter.flatpak_runtime_version }}'
 sdk: {{ cookiecutter.flatpak_sdk }}
 command: {{ cookiecutter.app_name }}
+build-options:
+  strip: false
+  no-debuginfo: true
 cleanup:
   - /include
   - /share/man
@@ -63,8 +66,6 @@ modules:
   - name: app_packages
     buildsystem: simple
     build-options:
-      strip: false
-      no-debuginfo: true
       build-args:
         - --filesystem=host  # For local requirements.
         - --share=network  # For downloaded requirements.
@@ -85,9 +86,6 @@ modules:
         path: pip_install.py
   - name: app
     buildsystem: simple
-    build-options:
-      strip: false
-      no-debuginfo: true
     build-commands:
       - mkdir -p /app/briefcase
       - cp --archive src/app/ /app/briefcase/app
