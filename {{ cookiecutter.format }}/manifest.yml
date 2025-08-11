@@ -66,8 +66,6 @@ modules:
   - name: app_packages
     buildsystem: simple
     build-options:
-      strip: false
-      no-debuginfo: true
       build-args:
         - --filesystem=host  # For local requirements.
         - --share=network  # For downloaded requirements.
@@ -88,9 +86,6 @@ modules:
         path: pip_install.py
   - name: app
     buildsystem: simple
-    build-options:
-      strip: false
-      no-debuginfo: true
     build-commands:
       - mkdir -p /app/briefcase
       - cp --archive src/app/ /app/briefcase/app
