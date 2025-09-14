@@ -2,6 +2,10 @@ app-id: {{ cookiecutter.bundle_identifier }}
 default-branch: {{ cookiecutter.version }}
 runtime: {{ cookiecutter.flatpak_runtime }}
 runtime-version: '{{ cookiecutter.flatpak_runtime_version }}'
+{%- if cookiecutter.flatpak_base or cookiecutter.flatpak_base_version %}
+base: {{ cookiecutter.flatpak_base }}
+base-version: '{{ cookiecutter.flatpak_base_version }}'
+{%- endif %}
 sdk: {{ cookiecutter.flatpak_sdk }}
 command: {{ cookiecutter.app_name }}
 build-options:
