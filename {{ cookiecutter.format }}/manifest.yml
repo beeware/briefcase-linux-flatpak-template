@@ -79,8 +79,7 @@ modules:
       # the Flatpak build environment. However, clang and gcc are (mostly)
       # command line compatible, and the output objects are compatible,
       # so we can override the CC build environment variable to force the
-      # use of gcc.
-      # CXX needs the same treatment
+      # use of gcc. CXX needs the same treatment.
       - CC="gcc -pthread" CXX="g++ -pthread" /app/bin/python3 pip_install.py
     sources:
       - type: file
