@@ -80,10 +80,7 @@ modules:
       # command line compatible, and the output objects are compatible,
       # so we can override the CC build environment variable to force the
       # use of gcc.
-      #
-      # CXX needs the same treatment: a C++ extension reaches for clang++
-      # independently of CC, and fails with
-      #     error: [Errno 2] No such file or directory: 'clang++'
+      # CXX needs the same treatment
       - CC="gcc -pthread" CXX="g++ -pthread" /app/bin/python3 pip_install.py
     sources:
       - type: file
