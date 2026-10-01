@@ -216,6 +216,20 @@ int main(int argc, char *argv[]) {
     }
 
 
+    // Point sys.executable at /app/bin/python so that the app can start Python subprocesses.
+    {% if cookiecutter.allow_subprocesses %}
+    path = "/app/bin/python";
+    debug_log("Setting sys.executable: %s\n", path);
+    module_attr = PyUnicode_FromString(path);
+    if (module_attr == NULL
+        || PySys_SetObject("executable", module_attr) < 0
+        || PySys_SetObject("_base_executable", module_attr) < 0) {
+        // crash_dialog("Could not set sys.executable");
+        exit(-16);
+    }
+    Py_DECREF(module_attr);
+    {% endif -%}
+
     // Start the app module.
     //
     // From here to Py_ObjectCall(runmodule...) is effectively
