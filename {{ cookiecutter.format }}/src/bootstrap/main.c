@@ -220,6 +220,12 @@ int main(int argc, char *argv[]) {
     path = "/app/bin/python";
     debug_log("Setting sys.executable: %s\n", path);
     module_attr = PyUnicode_FromString(path);
+    {% else %}
+    // Clear sys.executable so that subprocesses using that property don't fork-bomb.
+    debug_log("Clearing sys.executable");
+    module_attr = PyUnicode_FromString("");
+    {% endif -%}
+
     if (module_attr == NULL
         || PySys_SetObject("executable", module_attr) < 0
         || PySys_SetObject("_base_executable", module_attr) < 0) {
@@ -227,7 +233,6 @@ int main(int argc, char *argv[]) {
         exit(-16);
     }
     Py_DECREF(module_attr);
-    {% endif -%}
 
     // Start the app module.
     //
